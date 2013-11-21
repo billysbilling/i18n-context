@@ -1,3 +1,5 @@
+var EmberI18n = Ember.I18n;
+
 module.exports = function(contextName, localesPath) {
     return (function() {
         var currentLocale;
@@ -11,14 +13,27 @@ module.exports = function(contextName, localesPath) {
             } else if (arguments.length === 1) {
                 //Setter
                 currentLocale = newLocale;
-                var translations = customTranslations[newLocale] || requireTranslations(localesPath, currentLocale);
+                var translations = customTranslations[newLocale] || requireTranslations(localesPath, currentLocale),
+                    k;
                 if (contextName === null) {
-                    for (var k in translations) {
-                        if (!translations.hasOwnProperty(k)) continue;
-                        Ember.I18n.translations[k] = translations[k];
+                    for (k in translations) {
+                        if (translations.hasOwnProperty(k)) {
+                            EmberI18n.translations[k] = translations[k];
+                        }
                     }
                 } else {
-                    Ember.I18n.translations[contextName] = translations;
+                    //Since Ember.I18n flattens the object when a nested key is used, we need to remove all keys that starts with the name of this context
+                    for (k in EmberI18n.translations) {
+                        if (EmberI18n.translations.hasOwnProperty(k)) {
+                            console.log(contextName, k);
+                            if (k.substring(0, contextName.length + 1) === contextName+'.') {
+                                console.log('yeah');
+                                delete EmberI18n.translations[k];
+                            }
+                        }
+                    }
+                    //Override Ember.I18n.translations
+                    EmberI18n.translations[contextName] = translations;
                 }
             } else if (arguments.length === 2) {
                 //Register custom locale

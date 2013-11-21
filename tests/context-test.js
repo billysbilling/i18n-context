@@ -95,13 +95,18 @@ test('setAllLocales', function() {
     var c2 = createContext('test2');
 
     equal(c1.locale(), 'en_US');
+    equal(c1.t('save'), 'Save');
     equal(c2.locale(), 'en_US');
+    equal(c2.t('save'), 'Save');
     
     context.setAllLocales('da_DK');
 
     equal(c1.locale(), 'da_DK');
+    equal(c1.t('save'), 'Gem');
     equal(c2.locale(), 'da_DK');
+    equal(c2.t('save'), 'Gem');
 
     var c3 = createContext('test3');
     equal(c3.locale(), 'da_DK');
+    equal(c3.t('save'), 'Gem');
 });

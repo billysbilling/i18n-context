@@ -1,3 +1,4 @@
 {
-    "hi": "Hej {{name}}"
+    "hi": "Hej {{name}}",
+    "save": "Gem"
 }
