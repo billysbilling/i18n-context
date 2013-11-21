@@ -11,7 +11,7 @@ module.exports = function(contextName, localesPath) {
             } else if (arguments.length === 1) {
                 //Setter
                 currentLocale = newLocale;
-                var translations = customTranslations[newLocale] || requireTranslations(localesPath, currentLocale, contextName === null);
+                var translations = customTranslations[newLocale] || requireTranslations(localesPath, currentLocale);
                 if (contextName === null) {
                     for (var k in translations) {
                         if (!translations.hasOwnProperty(k)) continue;
@@ -28,14 +28,6 @@ module.exports = function(contextName, localesPath) {
     })();
 };
 
-function requireTranslations(localesPath, locale, ignoreNonExisting) {
-    try {
-        return require(localesPath + '/' + locale);
-    } catch (e) {
-        if (ignoreNonExisting) {
-            return {};
-        } else {
-            throw e;
-        }
-    }
+function requireTranslations(localesPath, locale) {
+    return require(localesPath + '/' + locale);
 }
