@@ -1,6 +1,6 @@
 require('ember-i18n');
 
-var langFactory = require('./lang-factory'),
+var localeFactory = require('./locale-factory'),
     tFactory = require('./t-factory'),
     tProperty = require('./t-property');
 
@@ -12,7 +12,7 @@ reset();
 
 module.exports = context;
 module.exports.getContexts = getContexts;
-module.exports.setAllLangs = setAllLangs;
+module.exports.setAllLocales = setAllLocales;
 module.exports.__reset = reset;
 module.exports.tProperty = tProperty;
 
@@ -28,7 +28,7 @@ function context(contextName, localesPath) {
     
     m = {
         __localesPath: localesPath,
-        lang: langFactory(contextName, localesPath),
+        locale: localeFactory(contextName, localesPath),
         t: tFactory(contextName === null ? '' : contextName+'.'),
         tProperty: tProperty
     };
@@ -39,7 +39,7 @@ function context(contextName, localesPath) {
         contexts[contextName] = m;
     }
     
-    m.lang(defaultLocale);
+    m.locale(defaultLocale);
     
     return m;
 }
@@ -60,11 +60,11 @@ function getContexts() {
     return allContexts;
 }
 
-function setAllLangs(newLocale) {
+function setAllLocales(newLocale) {
     defaultLocale = newLocale;
     
     context.getContexts().forEach(function(c) {
-        c.lang(newLocale);
+        c.locale(newLocale);
     });
 }
 

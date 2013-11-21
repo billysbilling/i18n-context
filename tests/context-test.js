@@ -13,14 +13,14 @@ function createContext(contextName) {
 
 test('Returns context', function() {
     var c = createContext('test');
-    equal(typeof c.lang, 'function');
+    equal(typeof c.locale, 'function');
     equal(typeof c.t, 'function');
     equal(typeof c.tProperty, 'function');
 });
 
 test('Returns context for main', function() {
     var c = createContext(null);
-    equal(typeof c.lang, 'function');
+    equal(typeof c.locale, 'function');
     equal(typeof c.t, 'function');
     equal(typeof c.tProperty, 'function');
 });
@@ -48,13 +48,13 @@ test('Reuses main context', function() {
 
 test('Defaults to en_US', function() {
     var c = createContext('test');
-    equal(c.lang(), 'en_US');
+    equal(c.locale(), 'en_US');
 });
 
-test('lang() changes locale', function() {
+test('locale() changes locale', function() {
     var c = createContext('test');
-    c.lang('da_DK');
-    equal(c.lang(), 'da_DK');
+    c.locale('da_DK');
+    equal(c.locale(), 'da_DK');
 });
 
 test('t works', function() {
@@ -64,7 +64,7 @@ test('t works', function() {
 
 test('t works with non-default locale', function() {
     var c = createContext('test');
-    c.lang('da_DK');
+    c.locale('da_DK');
     equal(c.t('hi', {name: 'John'}), 'Hej John');
 });
 
