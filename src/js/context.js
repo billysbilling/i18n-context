@@ -1,5 +1,3 @@
-//TODO: Rename to component? Repo to i18n-component?
-
 require('ember-i18n');
 
 var langFactory = require('./lang-factory'),
@@ -7,9 +5,18 @@ var langFactory = require('./lang-factory'),
     tProperty = require('./t-property');
 
 var mainContext,
-    contexts = {};
+    contexts,
+    defaultLocale;
 
-module.exports = function(contextName, localesPath) {
+reset();
+
+module.exports = context;
+module.exports.getContexts = getContexts;
+module.exports.setAllLangs = setAllLangs;
+module.exports.__reset = reset;
+module.exports.tProperty = tProperty;
+
+function context(contextName, localesPath) {
     var m = contextName === null ? mainContext : contexts[contextName];
     
     if (m) {
@@ -32,26 +39,38 @@ module.exports = function(contextName, localesPath) {
         contexts[contextName] = m;
     }
     
-    m.lang('en_US');
+    m.lang(defaultLocale);
     
     return m;
-};
+}
 
-module.exports.getContexts = function() {
+function getContexts() {
     var allContexts = [];
+    
     if (mainContext) {
         allContexts.push(mainContext);
     }
+    
     for (var k in contexts) {
         if (contexts.hasOwnProperty(k)) {
             allContexts.push(contexts[k]);
         }
     }
+    
     return allContexts;
-};
+}
 
-module.exports.__reset = function() {
+function setAllLangs(newLocale) {
+    defaultLocale = newLocale;
+    
+    context.getContexts().forEach(function(c) {
+        c.lang(newLocale);
+    });
+}
+
+function reset() {
+    defaultLocale = 'en_US';
     mainContext = null;
     contexts = {};
     Ember.I18n.translations = {};
-};
+}
