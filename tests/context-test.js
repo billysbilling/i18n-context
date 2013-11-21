@@ -1,9 +1,10 @@
 var context = require('../src/js/context'),
-    tProperty = require('../src/js/t-property');
+    tProperty = require('../src/js/t-property'),
+    reset = require('./helpers/reset');
 
 QUnit.module('context', {
     teardown: function() {
-        context.__reset();
+        reset();
     }
 });
 
@@ -73,12 +74,18 @@ test('tProperty is the same', function() {
     strictEqual(c.tProperty, tProperty);
 });
 
-test('contexts are added', function() {
+test('contexts are added and destroyed', function() {
     deepEqual(context.getContexts(), []);
 
     var c1 = createContext('test');
     deepEqual(context.getContexts(), [c1]);
 
     var c2 = createContext(null);
-    deepEqual(context.getContexts(), [c2, c1]);
+    deepEqual(context.getContexts(), [c1, c2]);
+
+    c1.destroy();
+    deepEqual(context.getContexts(), [c2]);
+
+    c2.destroy();
+    deepEqual(context.getContexts(), []);
 });

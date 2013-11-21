@@ -4,20 +4,18 @@ var localeFactory = require('./locale-factory'),
     tFactory = require('./t-factory'),
     tProperty = require('./t-property');
 
-var mainContext,
-    contexts,
-    defaultLocale;
-
-reset();
+var contexts = {},
+    defaultLocale = 'en_US';
 
 module.exports = context;
 module.exports.getContexts = getContexts;
 module.exports.setAllLocales = setAllLocales;
-module.exports.__reset = reset;
 module.exports.tProperty = tProperty;
 
 function context(contextName, localesPath) {
-    var m = contextName === null ? mainContext : contexts[contextName];
+    var containerContextName = 'context:' + (contextName || ''); //We need this, since `null` is not a valid hash key
+    
+    var m = contexts[containerContextName];
     
     if (m) {
         if (m.__localesPath !== localesPath) {
@@ -30,14 +28,11 @@ function context(contextName, localesPath) {
         __localesPath: localesPath,
         locale: localeFactory(contextName, localesPath),
         t: tFactory(contextName === null ? '' : contextName+'.'),
-        tProperty: tProperty
+        tProperty: tProperty,
+        destroy: destroyFactory(containerContextName)
     };
 
-    if (contextName === null) {
-        mainContext = m;
-    } else {
-        contexts[contextName] = m;
-    }
+    contexts[containerContextName] = m;
     
     m.locale(defaultLocale);
     
@@ -46,10 +41,6 @@ function context(contextName, localesPath) {
 
 function getContexts() {
     var allContexts = [];
-    
-    if (mainContext) {
-        allContexts.push(mainContext);
-    }
     
     for (var k in contexts) {
         if (contexts.hasOwnProperty(k)) {
@@ -68,9 +59,8 @@ function setAllLocales(newLocale) {
     });
 }
 
-function reset() {
-    defaultLocale = 'en_US';
-    mainContext = null;
-    contexts = {};
-    Ember.I18n.translations = {};
+function destroyFactory(containerContextName) {
+    return function() {
+        delete contexts[containerContextName];
+    };
 }

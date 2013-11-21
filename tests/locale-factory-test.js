@@ -1,9 +1,10 @@
 var context = require('../src/js/context'),
-    localeFactory = require('../src/js/locale-factory');
+    localeFactory = require('../src/js/locale-factory'),
+    reset = require('./helpers/reset');
 
 QUnit.module('locale-factory', {
     teardown: function() {
-        context.__reset();
+        reset();
     }
 });
 
