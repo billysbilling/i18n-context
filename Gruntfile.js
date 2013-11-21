@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         'billy-builder': {
-            title: 'i18n-module'
+            title: 'i18n-context',
             jshint: true
         }
     });

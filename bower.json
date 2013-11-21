@@ -1,12 +1,11 @@
 {
-  "name": "i18n-module",
+  "name": "i18n-context",
   "version": "0.1.0",
-  "homepage": "https://github.com/billysbilling/i18n-module",
-  "main": "src/js/REPLACE-ME.js",
+  "homepage": "https://github.com/billysbilling/i18n-context",
+  "main": "src/js/context.js",
   "billy-builder": {
     "include": [
-      "src/js",
-      "src/templates"
+      "src/js"
     ]
   },
   "license": "MIT",
@@ -19,6 +18,6 @@
     "package.json"
   ],
   "dependencies": {
-    "ember": "billysbilling/bower-ember#~1.3.0"
+    "ember-i18n": "billysbilling/bower-ember-i18n#~1.5.0"
   }
 }
