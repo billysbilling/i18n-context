@@ -25,9 +25,7 @@ module.exports = function(contextName, localesPath) {
                     //Since Ember.I18n flattens the object when a nested key is used, we need to remove all keys that starts with the name of this context
                     for (k in EmberI18n.translations) {
                         if (EmberI18n.translations.hasOwnProperty(k)) {
-                            console.log(contextName, k);
                             if (k.substring(0, contextName.length + 1) === contextName+'.') {
-                                console.log('yeah');
                                 delete EmberI18n.translations[k];
                             }
                         }
