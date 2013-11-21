@@ -1,6 +1,6 @@
 {
   "name": "i18n-context",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "homepage": "https://github.com/billysbilling/i18n-context",
   "main": "src/js/context.js",
   "billy-builder": {
