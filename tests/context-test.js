@@ -74,7 +74,7 @@ test('tProperty is the same', function() {
     strictEqual(c.tProperty, tProperty);
 });
 
-test('contexts are added and destroyed', function() {
+test('Contexts are added and destroyed', function() {
     deepEqual(context.getContexts(), []);
 
     var c1 = createContext('test');
@@ -88,4 +88,20 @@ test('contexts are added and destroyed', function() {
 
     c2.destroy();
     deepEqual(context.getContexts(), []);
+});
+
+test('setAllLocales', function() {
+    var c1 = createContext('test1');
+    var c2 = createContext('test2');
+
+    equal(c1.locale(), 'en_US');
+    equal(c2.locale(), 'en_US');
+    
+    context.setAllLocales('da_DK');
+
+    equal(c1.locale(), 'da_DK');
+    equal(c2.locale(), 'da_DK');
+
+    var c3 = createContext('test3');
+    equal(c3.locale(), 'da_DK');
 });
