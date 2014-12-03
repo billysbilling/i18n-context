@@ -1,15 +1,14 @@
-var context = require('../src/js/context'),
-    tProperty = require('../src/js/t-property'),
-    reset = require('./helpers/reset');
+var context = bbRequire('i18n-context/context'),
+    tProperty = bbRequire('i18n-context/t-property');
 
 QUnit.module('context', {
     teardown: function() {
-        reset();
+        i18nContextReset();
     }
 });
 
 function createContext(contextName) {
-    return context(contextName, require.resolve('./test-locales'));
+    return context(contextName, 'locales');
 }
 
 test('Returns context', function() {
@@ -98,7 +97,7 @@ test('setAllLocales', function() {
     equal(c1.t('save'), 'Save');
     equal(c2.locale(), 'en_US');
     equal(c2.t('save'), 'Save');
-    
+
     context.setAllLocales('da_DK');
 
     equal(c1.locale(), 'da_DK');

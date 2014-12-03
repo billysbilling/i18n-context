@@ -1,10 +1,9 @@
-var context = require('../src/js/context'),
-    localeFactory = require('../src/js/locale-factory'),
-    reset = require('./helpers/reset');
+var context = bbRequire('i18n-context/context'),
+    localeFactory = bbRequire('i18n-context/locale-factory');
 
 QUnit.module('locale-factory', {
     teardown: function() {
-        reset();
+        i18nContextReset();
     }
 });
 
@@ -19,13 +18,13 @@ test('getter returns null when not set', function() {
 });
 
 test('using known locale', function() {
-    var locale = localeFactory('test', require.resolve('./test-locales'));
+    var locale = localeFactory('test', 'locales');
     locale('en_US');
     equal(Ember.I18n.translations.test.hi, 'Hi {{name}}');
 });
 
 test('registering custom locale does not change locale', function() {
-    var locale = localeFactory('test', require.resolve('./test-locales'));
+    var locale = localeFactory('test', 'locales');
     locale('en_US');
     locale('ma_MA', {
         'hi': 'Marklar {{name}}!'
@@ -34,7 +33,7 @@ test('registering custom locale does not change locale', function() {
 });
 
 test('using custom locale', function() {
-    var locale = localeFactory('test', require.resolve('./test-locales'));
+    var locale = localeFactory('test', 'locales');
     locale('ma_MA', {
         'hi': 'Marklar {{name}}!'
     });

@@ -1,4 +1,4 @@
-var tProperty = require('../src/js/t-property');
+var tProperty = bbRequire('i18n-context/t-property');
 
 var originalEmberI18nT = Ember.I18n.t;
 
