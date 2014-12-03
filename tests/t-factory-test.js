@@ -1,4 +1,4 @@
-var tFactory = require('../src/js/t-factory');
+var tFactory = bbRequire('i18n-context/t-factory');
 
 var originalEmberI18nT = Ember.I18n.t;
 

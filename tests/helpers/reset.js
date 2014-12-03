@@ -1,6 +1,4 @@
-var context = require('../../src/js/context');
-
-module.exports = function() {
+function i18nContextReset() {
     context.setAllLocales('en_US');
     context.getContexts().forEach(function(c) {
         c.destroy();

@@ -18,6 +18,6 @@
     "package.json"
   ],
   "dependencies": {
-    "ember-i18n": "billysbilling/bower-ember-i18n#~1.5.0"
+    "ember-i18n": "jamesarosen/ember-i18n#>=3.0.0-beta2"
   }
 }
